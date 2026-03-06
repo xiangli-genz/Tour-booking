@@ -10,7 +10,7 @@ const flash = require('express-flash');
 const session = require('express-session');
 
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 
 //kết nối database
 database.connect();
@@ -21,6 +21,7 @@ app.set('view engine', 'pug');
 
 //Thiết lập thư mục tĩnh
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: true }));
 
 //tạo biến cục file pug
 app.locals.pathAdmin = variablesConfig.pathAdmin;
