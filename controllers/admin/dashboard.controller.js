@@ -18,35 +18,28 @@ module.exports.dashboard = async (req, res) => {
   overview.totalPrice = orderList.reduce((sum, item) => sum + item.total, 0);
   // End Section 1
 
-  // Lấy 3 đơn hàng mới nhất
   const orders = await Order.find({ deleted: false }).sort({ createdAt: -1 }).limit(3);
 
-  // Process each order - calculate totals and map payment labels
   for (const order of orders) {
-    // Map payment labels
     const pm = variableConfig.paymentMethod.find(item => item.value == order.paymentMethod);
     order.paymentMethodName = pm ? pm.label : (order.paymentMethod || "--");
 
     const ps = variableConfig.paymentStatus.find(item => item.value == order.paymentStatus);
     order.paymentStatusName = ps ? ps.label : (order.paymentStatus || "--");
 
-    // Calculate item prices and order total
     order.subTotal = 0;
     if (order.items && Array.isArray(order.items)) {
       for (const item of order.items) {
-        // Calculate adult total
         if (item.adult) {
           item.adultPrice = item.priceNewAdult || item.priceAdult || 0;
           item.adultTotal = item.adult * item.adultPrice;
           order.subTotal += item.adultTotal;
         }
-        // Calculate child total
         if (item.child) {
           item.childPrice = item.priceNewChildren || item.priceChildren || 0;
           item.childTotal = item.child * item.childPrice;
           order.subTotal += item.childTotal;
         }
-        // Calculate baby total
         if (item.baby) {
           item.babyPrice = item.priceNewBaby || item.priceBaby || 0;
           item.babyTotal = item.baby * item.babyPrice;
@@ -55,7 +48,6 @@ module.exports.dashboard = async (req, res) => {
       }
     }
     
-    // Set totals with safe defaults
     order.subTotal = order.subTotal || 0;
     order.discount = order.discount || 0;
     order.total = (order.total || order.subTotal) - order.discount;
@@ -70,7 +62,6 @@ module.exports.dashboard = async (req, res) => {
 module.exports.revenueChartPost = async (req, res) => {
   const { currentMonth, currentYear, previousMonth, previousYear, arrayDay } = req.body;
 
-  // Truy vấn tất cả đơn hàng trong tháng hiện tại
   const ordersCurrentMonth = await Order.find({
     deleted: false,
     createdAt: {
@@ -79,7 +70,6 @@ module.exports.revenueChartPost = async (req, res) => {
     }
   })
 
-  // Truy vấn tất cả đơn hàng trong tháng trước
   const ordersPreviousMonth = await Order.find({
     deleted: false,
     createdAt: {
@@ -88,12 +78,10 @@ module.exports.revenueChartPost = async (req, res) => {
     }
   })
 
-  // Tạo mảng doanh thu theo từng ngày
   const dataMonthCurrent = [];
   const dataMonthPrevious = [];
 
   for (const day of arrayDay) {
-    // Tính tổng doanh thu theo từng ngày của tháng này
     let totalCurrent = 0;
     for (const order of ordersCurrentMonth) {
       const orderDate = new Date(order.createdAt).getDate();
@@ -103,7 +91,6 @@ module.exports.revenueChartPost = async (req, res) => {
     }
     dataMonthCurrent.push(totalCurrent);
 
-    // Tính tổng doanh thu theo từng ngày của tháng trước
     let totalPrevious = 0;
     for (const order of ordersPreviousMonth) {
       const orderDate = new Date(order.createdAt).getDate();

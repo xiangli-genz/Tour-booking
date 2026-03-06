@@ -17,10 +17,8 @@ module.exports.home = async (req, res) => {
     .limit(6)
 
   for(const item of tourListSection2) {
-    // Format departure date
     item.departureDateFormat = moment(item.departureDate).format("DD/MM/YYYY");
     
-    // Calculate remaining slots
     item.stockAdult = item.stock || 0;
     if (item.soldCount) {
       item.stockAdult -= item.soldCount;
@@ -41,7 +39,7 @@ module.exports.home = async (req, res) => {
     .sort({
       position: "desc"
     })
-    .limit(8)
+    .limit(3)
 
   for(const item of tourListSection4) {
     item.departureDateFormat = moment(item.departureDate).format("DD/MM/YYYY");
@@ -61,7 +59,7 @@ module.exports.home = async (req, res) => {
     .sort({
       position: "desc"
     })
-    .limit(8)
+    .limit(3)
 
   for(const item of tourListSection5) {
     item.departureDateFormat = moment(item.departureDate).format("DD/MM/YYYY");

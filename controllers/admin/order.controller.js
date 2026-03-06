@@ -24,7 +24,6 @@ module.exports.list = async (req, res) => {
     find.createdAt = dateFiler;
   }
 
-  // Keyword search across orderCode, fullName, phone
   if (req.query.keyword) {
     const kw = req.query.keyword.trim();
     if (kw.length > 0) {
@@ -44,15 +43,12 @@ module.exports.list = async (req, res) => {
     });
 
   for (const orderDetail of orderList) {
-    // Safe mapping for payment method
     const pm = variableConfig.paymentMethod.find(item => item.value == orderDetail.paymentMethod);
     orderDetail.paymentMethodName = pm ? pm.label : (orderDetail.paymentMethod || "--");
 
-    // Safe mapping for payment status
     const ps = variableConfig.paymentStatus.find(item => item.value == orderDetail.paymentStatus);
     orderDetail.paymentStatusName = ps ? ps.label : (orderDetail.paymentStatus || "--");
 
-    // Safe mapping for order status
     const os = variableConfig.orderStatus.find(item => item.value == orderDetail.status);
     orderDetail.statusName = os ? os.label : (orderDetail.status || "--");
 

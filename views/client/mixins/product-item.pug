@@ -23,9 +23,6 @@ mixin product-item(item)
           | #{item.priceNewAdult.toLocaleString("vi-VN")}
           span.inner-unit đ
       .inner-desc
-        //- .inner-desc-item
-        //-   | Mã Tour:
-        //-   b #{item.code}
         .inner-desc-item
           | Ngày Khởi Hành:
           b #{item.departureDateFormat}
@@ -33,13 +30,6 @@ mixin product-item(item)
           | Thời Gian:
           b #{item.time}
       .inner-meta
-        //- .inner-rating
-        //-   .inner-stars
-        //-     - for (var i = 0; i < item.ratingStars; i++)
-        //-       i.fa-solid.fa-star
-        //-     - for (var j = item.ratingStars; j < 5; j++)
-        //-       i.fa-regular.fa-star
-        //-   .inner-number (#{item.ratingTotal})
         .inner-stock
           .inner-label Số chỗ còn:
-          .inner-number #{item.stockAdult}
+          .inner-number #{item.stockAdult + item.stockChildren + item.stockBaby}

@@ -23,13 +23,13 @@ block main
                   option(value="") -- Chọn điểm đi --
                   each item in cityList
                     option(value=item.id) #{item.name}
-
               .inner-group
                 .inner-label Điểm đến
-                select(name="locationTo")
-                  option(value="") -- Chọn điểm đến --
-                  each item in cityList
-                    option(value=item.id) #{item.name}
+                input(
+                  type="text"
+                  name="locationTo"
+                  placeholder="Nhập điểm đến"
+                )
 
               .inner-group
                 .inner-label Ngày khởi hành
@@ -76,22 +76,7 @@ block main
             h2.inner-title #{category.name}
             .inner-desc
               | !{category.description}
-          .inner-info-2
-            .inner-sort
-              .inner-label Sắp xếp:
-              .inner-list
-                button
-                  | Giá tăng dần
-                  i.fa-solid.fa-square-caret-up
-                button
-                  | Giá giảm dần
-                  i.fa-solid.fa-square-caret-down
-                button.active
-                  | Khuyến Mại Hot
-                  i.fa-solid.fa-tag
-                button
-                  | Xem Nhiều
-                  i.fa-solid.fa-eye
+          
             .inner-count-record
               | Tất cả:
               b #{totalTour} Tour

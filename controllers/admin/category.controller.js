@@ -186,12 +186,8 @@ module.exports.deletePatch = async (req, res) => {
   try {
     const id = req.params.id;
     
-    await Category.updateOne({
+    await Category.deleteOne({
       _id: id
-    }, {
-      deleted: true,
-      deletedBy: req.account.id,
-      deletedAt: Date.now()
     })
 
     req.flash("success", "Xóa danh mục thành công!");
@@ -222,13 +218,9 @@ module.exports.changeMultiPatch = async (req, res) => {
         req.flash("success", "Đổi trạng thái thành công!");
         break;
       case "delete":
-        await Category.updateMany({
+        await Category.deleteMany({
           _id: { $in: ids }
-        }, {
-          deleted: true,
-          deletedBy: req.account.id,
-          deletedAt: Date.now()
-        });
+        })
         req.flash("success", "Xóa thành công!");
         break;
     }

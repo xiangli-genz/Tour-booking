@@ -42,16 +42,15 @@ module.exports.list = async (req, res) => {
   });
 };
 
-// single delete (move to trash)
 module.exports.deletePatch = async (req, res) => {
   try {
     const id = req.params.id;
-    const contact = await Contact.findOne({ _id: id, deleted: false });
+    const contact = await Contact.findOne({ _id: id});
     if (!contact) {
       return res.json({ code: 'error', message: 'Liên hệ không tồn tại' });
     }
 
-    await Contact.updateOne({ _id: id }, { deleted: true, deletedAt: new Date(), deletedBy: req.account ? req.account.id : '' });
+    await Contact.deleteOne({ _id: id });
 
     req.flash('success', 'Xóa liên hệ thành công');
     res.json({ code: 'success' });
@@ -60,10 +59,8 @@ module.exports.deletePatch = async (req, res) => {
   }
 }
 
-// Bulk actions for contacts (expects { type, ids })
 module.exports.changeMultiPatch = async (req, res) => {
   try {
-    // front-end sends { option, ids } while some code may send { type, ids }
     const option = req.body.option || req.body.type;
     const ids = req.body.ids;
     if (!Array.isArray(ids) || ids.length === 0) {
@@ -72,7 +69,7 @@ module.exports.changeMultiPatch = async (req, res) => {
 
     switch (option) {
       case 'delete':
-        await Contact.updateMany({ _id: { $in: ids } }, { deleted: true, deletedAt: new Date(), deletedBy: req.account ? req.account.id : '' });
+        await Contact.deleteMany({ _id: { $in: ids } });
         req.flash('success', 'Xóa liên hệ thành công');
         break;
       default:

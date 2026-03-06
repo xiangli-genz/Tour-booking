@@ -74,7 +74,7 @@ module.exports.list = async (req, res) => {
 
     // Danh sách thành phố
     const cityList = await City.find({});
-    // Hết Danh sách thành phố
+    // Hết Danh sách thành phố 
 
 
     res.render("client/pages/tour-list", {
