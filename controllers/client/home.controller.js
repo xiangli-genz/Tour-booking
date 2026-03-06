@@ -27,7 +27,7 @@ module.exports.home = async (req, res) => {
   // End Section 2
 
   // Section 4: Tour Trong Nước
-  const categoryIdSection4 = "68fa17f5a45ecc987bb25a41"; // id danh mục Tour Trong Nước
+  const categoryIdSection4 = "69aa75e6738e9eef6d0f395a"; // id danh mục Tour Trong Nước
   const listCategoryId = await categoryHelper.getAllSubcategoryIds(categoryIdSection4);
 
   const tourListSection4 = await Tour
@@ -47,7 +47,7 @@ module.exports.home = async (req, res) => {
   // End Section 4: Tour Trong Nước
 
   // Section 5: Tour Nước Ngoài
-  const categoryIdSection5 = "68fa17faa45ecc987bb25a49"; // id danh mục Tour Nước Ngoài
+  const categoryIdSection5 = "69aa7655738e9eef6d0f3966"; // id danh mục Tour Nước Ngoài
   const listCategoryIdSection5 = await categoryHelper.getAllSubcategoryIds(categoryIdSection5);
 
   const tourListSection5 = await Tour
