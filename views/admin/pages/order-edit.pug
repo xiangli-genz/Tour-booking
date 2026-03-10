@@ -15,6 +15,9 @@ block main
       .inner-group
         label(class="inner-label" for="phone") Số điện thoại
         input(type="text" id="phone" name="phone" value=orderDetail.phone)
+      .inner-group
+        label(class="inner-label" for="email") Email
+        input(type="email" id="email" name="email" value=orderDetail.email)
       .inner-group.inner-two-col
         label(class="inner-label" for="note") Ghi chú
         textarea(id="note" name="note") #{orderDetail.note}

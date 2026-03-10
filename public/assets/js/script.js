@@ -365,9 +365,20 @@ if(orderForm) {
         errorMessage: 'Số điện thoại không đúng định dạng!'
       },
     ])
+    .addField('#email-input', [
+      {
+        rule: 'required',
+        errorMessage: 'Vui lòng nhập email!'
+      },
+      {
+        rule: 'email',
+        errorMessage: 'Email không đúng định dạng!'
+      }
+    ])
     .onSuccess((event) => {
       const fullName = event.target.fullName.value;
       const phone = event.target.phone.value;
+      const email = event.target.email.value;
       const note = event.target.note.value;
       const method = event.target.method.value;
 
@@ -390,6 +401,7 @@ if(orderForm) {
         const dataFinal = {
           fullName: fullName,
           phone: phone,
+          email: email,
           note: note,
           paymentMethod: method,
           items: cart
