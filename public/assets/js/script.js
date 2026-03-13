@@ -523,27 +523,27 @@ if(formSearch) {
       url.searchParams.delete("locationTo");
     }
 
-    // Số lượng
-    const stockAdult = parseInt(formSearch.querySelector("[stock-adult]").innerHTML);
-    if(stockAdult > 0) {
-      url.searchParams.set("stockAdult", stockAdult);
-    } else {
-      url.searchParams.delete("stockAdult");
-    }
+    // // Số lượng
+    // const stockAdult = parseInt(formSearch.querySelector("[stock-adult]").innerHTML);
+    // if(stockAdult > 0) {
+    //   url.searchParams.set("stockAdult", stockAdult);
+    // } else {
+    //   url.searchParams.delete("stockAdult");
+    // }
 
-    const stockChildren = parseInt(formSearch.querySelector("[stock-children]").innerHTML);
-    if(stockChildren > 0) {
-      url.searchParams.set("stockChildren", stockChildren);
-    } else {
-      url.searchParams.delete("stockChildren");
-    }
+    // const stockChildren = parseInt(formSearch.querySelector("[stock-children]").innerHTML);
+    // if(stockChildren > 0) {
+    //   url.searchParams.set("stockChildren", stockChildren);
+    // } else {
+    //   url.searchParams.delete("stockChildren");
+    // }
 
-    const stockBaby = parseInt(formSearch.querySelector("[stock-baby]").innerHTML);
-    if(stockBaby > 0) {
-      url.searchParams.set("stockBaby", stockBaby);
-    } else {
-      url.searchParams.delete("stockBaby");
-    }
+    // const stockBaby = parseInt(formSearch.querySelector("[stock-baby]").innerHTML);
+    // if(stockBaby > 0) {
+    //   url.searchParams.set("stockBaby", stockBaby);
+    // } else {
+    //   url.searchParams.delete("stockBaby");
+    // }
 
     // Ngày khởi hành
     const departureDate = formSearch.departureDate.value;
