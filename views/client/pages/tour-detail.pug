@@ -55,11 +55,6 @@ block main
                 .inner-info
                   .inner-title #{tourDetail.name}
               .inner-meta
-                
-                //- i.fa-solid.fa-ticket-simple
-                //- span Mã Tour:
-                //- span.inner-highlight 28T00001
-
                 .inner-item
                   i.fa-solid.fa-calendar-days
                   span Thời Gian:
@@ -79,52 +74,63 @@ block main
                     option(value=item.id) #{item.name}
               .inner-quantity
                 label.inner-label Số Lượng Hành Khách
+                p(style="font-size:11px; color:#e07b00; margin: 4px 0 10px 0; line-height:1.5;")
+                  | ⚠️ Tối thiểu 1 người lớn. Mỗi người lớn kèm tối đa 2 trẻ em &amp; 1 em bé.
                 .inner-list
                   .inner-item
                     .inner-item-label Người lớn:
                     .inner-item-input
                       input(
-                        value="1" 
-                        min="0" 
+                        value="1"
+                        min="1"
                         max=tourDetail.stockAdult
                         type="number"
                         input-stock-adult
                         price=tourDetail.priceNewAdult
+                        stock-max=tourDetail.stockAdult
                         )
                     .inner-item-price
                       span(stock-adult) 1
-                      span x
+                      span &nbsp;x&nbsp;
                       span.inner-highlight #{tourDetail.priceNewAdult.toLocaleString("vi-VN")}
+                    span(style="font-size:11px; color:#888; margin-left:6px; white-space:nowrap;")
+                      | (Còn #{tourDetail.stockAdult})
                   .inner-item
                     .inner-item-label Trẻ em:
                     .inner-item-input
                       input(
-                        value="0" 
-                        min="0" 
+                        value="0"
+                        min="0"
                         max=tourDetail.stockChildren
                         type="number"
                         input-stock-children
-                      price=tourDetail.priceNewChildren
+                        price=tourDetail.priceNewChildren
+                        stock-max=tourDetail.stockChildren
                         )
                     .inner-item-price
                       span(stock-children) 0
-                      span x
+                      span &nbsp;x&nbsp;
                       span.inner-highlight #{tourDetail.priceNewChildren.toLocaleString("vi-VN")}
+                    span(style="font-size:11px; color:#888; margin-left:6px; white-space:nowrap;")
+                      | (Còn #{tourDetail.stockChildren})
                   .inner-item
                     .inner-item-label Em bé:
                     .inner-item-input
                       input(
-                        value="0" 
-                        min="0" 
+                        value="0"
+                        min="0"
                         max=tourDetail.stockBaby
                         type="number"
                         input-stock-baby
-                      price=tourDetail.priceNewBaby
+                        price=tourDetail.priceNewBaby
+                        stock-max=tourDetail.stockBaby
                         )
                     .inner-item-price
                       span(stock-baby) 0
-                      span x
+                      span &nbsp;x&nbsp;
                       span.inner-highlight #{tourDetail.priceNewBaby.toLocaleString("vi-VN")}
+                    span(style="font-size:11px; color:#888; margin-left:6px; white-space:nowrap;")
+                      | (Còn #{tourDetail.stockBaby})
               .inner-total
                 .inner-total-label Tổng cộng:
                 .inner-total-price

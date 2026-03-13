@@ -569,71 +569,109 @@ if(formSearch) {
 // Box Tour Detail
 const boxTourDetail = document.querySelector(".box-tour-detail");
 if(boxTourDetail) {
-  // Bước 1
-  const inputStockAdult = document.querySelector("[input-stock-adult]");
+  const inputStockAdult    = document.querySelector("[input-stock-adult]");
   const inputStockChildren = document.querySelector("[input-stock-children]");
-  const inputStockBaby = document.querySelector("[input-stock-baby]");
+  const inputStockBaby     = document.querySelector("[input-stock-baby]");
 
-  // Bước 3
+  const maxAdult    = parseInt(inputStockAdult.getAttribute("stock-max"))    || 0;
+  const maxChildren = parseInt(inputStockChildren.getAttribute("stock-max")) || 0;
+  const maxBaby     = parseInt(inputStockBaby.getAttribute("stock-max"))     || 0;
+
+  // Tính giới hạn trẻ em & em bé dựa trên số người lớn hiện tại
+  // Quy tắc: 1 NL -> tối đa 2 TE & 1 EB
+  const getMaxChildren = (adult) => Math.min(adult * 2, maxChildren);
+  const getMaxBaby     = (adult) => Math.min(adult * 1, maxBaby);
+
   const drawBoxDetail = () => {
-    const quantityAdult = parseInt(inputStockAdult.value);
-    const quantityChildren = parseInt(inputStockChildren.value);
-    const quantityBaby = parseInt(inputStockBaby.value);
+    let adult    = parseInt(inputStockAdult.value)    || 0;
+    let children = parseInt(inputStockChildren.value) || 0;
+    let baby     = parseInt(inputStockBaby.value)     || 0;
 
-    const stockAdult = document.querySelector("[stock-adult]");
-    const stockChildren = document.querySelector("[stock-children]");
-    const stockBaby = document.querySelector("[stock-baby]");
+    // Ràng buộc: tối thiểu 1 người lớn
+    if (adult < 1) {
+      adult = 1;
+      inputStockAdult.value = 1;
+    }
+    if (adult > maxAdult) {
+      adult = maxAdult;
+      inputStockAdult.value = maxAdult;
+    }
 
-    stockAdult.innerHTML = quantityAdult;
-    stockChildren.innerHTML = quantityChildren;
-    stockBaby.innerHTML = quantityBaby;
+    // Cập nhật max động cho trẻ em & em bé
+    const allowedChildren = getMaxChildren(adult);
+    const allowedBaby     = getMaxBaby(adult);
 
-    const priceAdult = parseInt(inputStockAdult.getAttribute("price"));
-    const priceChildren = parseInt(inputStockChildren.getAttribute("price"));
-    const priceBaby = parseInt(inputStockBaby.getAttribute("price"));
-    const totalPrice = (quantityAdult * priceAdult) + (quantityChildren * priceChildren) + (quantityBaby * priceBaby);
-    const elementTotalPrice = document.querySelector("[total-price]");
-    elementTotalPrice.innerHTML = totalPrice.toLocaleString("vi-VN");
-  }
+    inputStockChildren.max = allowedChildren;
+    inputStockBaby.max     = allowedBaby;
 
-  // Bước 2
+    // Nếu đang chọn vượt quá giới hạn mới thì cắt xuống
+    if (children > allowedChildren) {
+      children = allowedChildren;
+      inputStockChildren.value = children;
+    }
+    if (baby > allowedBaby) {
+      baby = allowedBaby;
+      inputStockBaby.value = baby;
+    }
+
+    // Cập nhật hiển thị số lượng
+    document.querySelector("[stock-adult]").innerHTML    = adult;
+    document.querySelector("[stock-children]").innerHTML = children;
+    document.querySelector("[stock-baby]").innerHTML     = baby;
+
+    // Tính tổng tiền
+    const priceAdult    = parseInt(inputStockAdult.getAttribute("price"))    || 0;
+    const priceChildren = parseInt(inputStockChildren.getAttribute("price")) || 0;
+    const priceBaby     = parseInt(inputStockBaby.getAttribute("price"))     || 0;
+    const totalPrice = (adult * priceAdult) + (children * priceChildren) + (baby * priceBaby);
+
+    document.querySelector("[total-price]").innerHTML = totalPrice.toLocaleString("vi-VN");
+  };
+
   inputStockAdult.addEventListener("change", drawBoxDetail);
+  inputStockAdult.addEventListener("input",  drawBoxDetail);
   inputStockChildren.addEventListener("change", drawBoxDetail);
+  inputStockChildren.addEventListener("input",  drawBoxDetail);
   inputStockBaby.addEventListener("change", drawBoxDetail);
+  inputStockBaby.addEventListener("input",  drawBoxDetail);
 
-  // Bước 4
+  // Khởi tạo lần đầu
+  drawBoxDetail();
+
+  // Thêm vào giỏ hàng
   const buttonAddToCart = boxTourDetail.querySelector(".inner-button-add-cart");
   buttonAddToCart.addEventListener("click", () => {
-    const tourId = buttonAddToCart.getAttribute("tour-id");
-    const quantityAdult = parseInt(inputStockAdult.value);
-    const quantityChildren = parseInt(inputStockChildren.value);
-    const quantityBaby = parseInt(inputStockBaby.value);
-    const locationFrom = boxTourDetail.querySelector("[location-from]").value;
+    const tourId        = buttonAddToCart.getAttribute("tour-id");
+    const quantityAdult    = parseInt(inputStockAdult.value)    || 0;
+    const quantityChildren = parseInt(inputStockChildren.value) || 0;
+    const quantityBaby     = parseInt(inputStockBaby.value)     || 0;
+    const locationFrom  = boxTourDetail.querySelector("[location-from]").value;
 
-    if(quantityAdult > 0 || quantityChildren > 0 || quantityBaby > 0) {
-      const cartItem = {
-        tourId: tourId,
-        quantityAdult: quantityAdult,
-        quantityChildren: quantityChildren,
-        quantityBaby: quantityBaby,
-        locationFrom: locationFrom,
-        checked: true
-
-      };
-
-      const cart = JSON.parse(localStorage.getItem("cart"));
-      
-      const indexItemExist = cart.findIndex(item => item.tourId == tourId);
-      if(indexItemExist != -1) {
-        cart[indexItemExist] = cartItem;
-      } else {
-        cart.push(cartItem);
-      }
-
-      localStorage.setItem("cart", JSON.stringify(cart));
-      window.location.href = "/cart";
+    if (quantityAdult < 1) {
+      alert("Phải có ít nhất 1 người lớn!");
+      return;
     }
-  })
+
+    const cartItem = {
+      tourId: tourId,
+      quantityAdult: quantityAdult,
+      quantityChildren: quantityChildren,
+      quantityBaby: quantityBaby,
+      locationFrom: locationFrom,
+      checked: true
+    };
+
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const indexItemExist = cart.findIndex(item => item.tourId == tourId);
+    if (indexItemExist !== -1) {
+      cart[indexItemExist] = cartItem;
+    } else {
+      cart.push(cartItem);
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    window.location.href = "/cart";
+  });
 }
 // End Box Tour Detail
 
