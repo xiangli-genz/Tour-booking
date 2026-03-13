@@ -84,22 +84,15 @@ block main
                   span.inner-down -
                   span.inner-number(stock-baby) 0
                   span.inner-up +
+          .inner-box.inner-duration
+            .inner-input-group
+              img.inner-icon(src="/assets/images/icon-calendar.svg")
+              input.inner-input(name="time" placeholder="Thời gian bạn muốn đi")
           .inner-box.inner-calendar
             .inner-input-group
               img.inner-icon(src="/assets/images/icon-calendar.svg")
               input.inner-input(type="date" name="departureDate")
-          .inner-box.inner-duration
-            .inner-input-group
-              img.inner-icon(src="/assets/images/icon-calendar.svg")
-              select.inner-input(name="time")
-                option(value="") -- Thời gian --
-                option(value="1 ngày") 1 ngày
-                option(value="2 ngày 1 đêm") 2 ngày 1 đêm
-                option(value="3 ngày 2 đêm") 3 ngày 2 đêm
-                option(value="4 ngày 3 đêm") 4 ngày 3 đêm
-                option(value="5 ngày 4 đêm") 5 ngày 4 đêm
-                option(value="6 ngày 5 đêm") 6 ngày 5 đêm
-                option(value="7 ngày") 7 ngày trở lên
+          
           button.inner-button(type="submit")
             i.fa-solid.fa-magnifying-glass
             | Tìm Kiếm

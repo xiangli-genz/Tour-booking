@@ -553,6 +553,14 @@ if(formSearch) {
       url.searchParams.delete("departureDate");
     }
 
+    // Thời gian đi tour
+    const time = formSearch.querySelector('[name="time"]').value;
+    if(time) {
+      url.searchParams.set("time", time);
+    } else {
+      url.searchParams.delete("time");
+    }
+
     window.location.href = url.href;
   })
 }
