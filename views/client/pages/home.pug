@@ -88,6 +88,18 @@ block main
             .inner-input-group
               img.inner-icon(src="/assets/images/icon-calendar.svg")
               input.inner-input(type="date" name="departureDate")
+          .inner-box.inner-duration
+            .inner-input-group
+              img.inner-icon(src="/assets/images/icon-calendar.svg")
+              select.inner-input(name="time")
+                option(value="") -- Thời gian --
+                option(value="1 ngày") 1 ngày
+                option(value="2 ngày 1 đêm") 2 ngày 1 đêm
+                option(value="3 ngày 2 đêm") 3 ngày 2 đêm
+                option(value="4 ngày 3 đêm") 4 ngày 3 đêm
+                option(value="5 ngày 4 đêm") 5 ngày 4 đêm
+                option(value="6 ngày 5 đêm") 6 ngày 5 đêm
+                option(value="7 ngày") 7 ngày trở lên
           button.inner-button(type="submit")
             i.fa-solid.fa-magnifying-glass
             | Tìm Kiếm
@@ -128,9 +140,7 @@ block main
             .swiper-wrapper
               each item in tourListSection2
                 .swiper-slide
-                  // Product Item
                   +product-item(item)
-                  // End Product Item
   // End Section 2
   // Section 3
   .section-3
@@ -148,31 +158,19 @@ block main
           .swiper-slide
             .inner-item
               a(href="#")
-                img(
-                  alt="" 
-                  src="/assets/images/banner-1.jpg"
-                  )
+                img(alt="" src="/assets/images/banner-1.jpg")
           .swiper-slide
             .inner-item
               a(href="#")
-                img(
-                  alt="" 
-                  src="/assets/images/banner-2.jpg"
-                  )
+                img(alt="" src="/assets/images/banner-2.jpg")
           .swiper-slide
             .inner-item
               a(href="#")
-                img(
-                  alt="" 
-                  src="/assets/images/banner-3.jpg"
-                  )
+                img(alt="" src="/assets/images/banner-3.jpg")
           .swiper-slide
             .inner-item
               a(href="#")
-                img(
-                  alt="" 
-                  src="/assets/images/banner-3.jpg"
-                  )
+                img(alt="" src="/assets/images/banner-3.jpg")
         .swiper-pagination
   // End Section 3
   // Section 4
@@ -188,9 +186,7 @@ block main
         data-aos="fade-up"
         )
         each item in tourListSection4
-          // Product Item
           +product-item(item)
-          // End Product Item
       .inner-button
         a.button-outline(href="/category/tour-trong-nuoc") Xem tất cả
   // End Section 4
@@ -202,10 +198,7 @@ block main
     .container
       .inner-image
         a(href="#")
-          img(
-            alt="" 
-            src="/assets/images/banner-4.jpg"
-            )
+          img(alt="" src="/assets/images/banner-4.jpg")
   // End Section 5
   // Section 6
   .section-4
@@ -220,9 +213,7 @@ block main
         data-aos="fade-up"
         )
         each item in tourListSection5
-          // Product Item
           +product-item(item)
-          // End Product Item
       .inner-button
         a.button-outline(href="/category/tour-nuoc-ngoai") Xem tất cả
   // End Section 6
@@ -234,10 +225,7 @@ block main
     .container
       .inner-image
         a(href="#")
-          img(
-            alt="" 
-            src="/assets/images/banner-5.jpg"
-            )
+          img(alt="" src="/assets/images/banner-5.jpg")
   // End Section 7
   // Section 8
   .section-8
@@ -254,52 +242,37 @@ block main
         .blog-item
           a(href="#")
             .inner-image
-              img(
-                alt="" 
-                src="/assets/images/blog-1.jpg"
-                )
+              img(alt="" src="/assets/images/blog-1.jpg")
             .inner-content
               .inner-date 23/05/2024
-              h3.inner-title Homestay “cổ tích” giữa Đà Lạt mộng mơ
+              h3.inner-title Homestay "cổ tích" giữa Đà Lạt mộng mơ
         .blog-item-2
           a(href="#")
             .inner-image
-              img(
-                alt="" 
-                src="/assets/images/blog-2.jpg"
-                )
+              img(alt="" src="/assets/images/blog-2.jpg")
             .inner-content
               .inner-date 23/05/2024
               h3.inner-title Top 5 điểm check in độc đáo tại Singapore
               .inner-desc
-                | Nếu bạn nghĩ du lịch Singapore rất nhàm chán vì chỉ mãi quanh quẩn trong những khối bê tông vô cảm thì bạn “chắc chưa?”. Tuy đảo quốc Sư Tử không phải là một quốc gia rộng lớn nhưng các địa điểm du lịch tại Singapore chưa từng đánh mất sức hút đối với cộng đồng xê dịch quốc tế.
+                | Nếu bạn nghĩ du lịch Singapore rất nhàm chán vì chỉ mãi quanh quẩn trong những khối bê tông vô cảm thì bạn "chắc chưa?". Tuy đảo quốc Sư Tử không phải là một quốc gia rộng lớn nhưng các địa điểm du lịch tại Singapore chưa từng đánh mất sức hút đối với cộng đồng xê dịch quốc tế.
         .blog-item
           a(href="#")
             .inner-image
-              img(
-                alt="" 
-                src="/assets/images/blog-3.jpg"
-                )
+              img(alt="" src="/assets/images/blog-3.jpg")
             .inner-content
               .inner-date 23/05/2024
               h3.inner-title Đặc sản không thể bỏ qua khi đến với Đà Nẵng - Hội An
         .blog-item
           a(href="#")
             .inner-image
-              img(
-                alt="" 
-                src="/assets/images/blog-4.jpg"
-                )
+              img(alt="" src="/assets/images/blog-4.jpg")
             .inner-content
               .inner-date 23/05/2024
               h3.inner-title Đảo Phú Quý Bình Thuận hot trend năm 2024
         .blog-item
           a(href="#")
             .inner-image
-              img(
-                alt="" 
-                src="/assets/images/blog-5.jpg"
-                )
+              img(alt="" src="/assets/images/blog-5.jpg")
             .inner-content
               .inner-date 23/05/2024
               h3.inner-title Trekking cắm trại tại Đà Lạt- Cảm nhận Đà Lạt qua từng bước chân

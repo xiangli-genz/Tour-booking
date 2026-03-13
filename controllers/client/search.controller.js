@@ -12,7 +12,6 @@ module.exports.list = async (req, res) => {
   if(req.query.locationFrom) {
     find.locations = req.query.locationFrom;
   }
-  // Hết Điểm đi
 
   // Điểm đến
   if(req.query.locationTo) {
@@ -22,54 +21,44 @@ module.exports.list = async (req, res) => {
     const keywordRegex = new RegExp(keyword);
     find.slug = keywordRegex;
   }
-  // Hết Điểm đến
 
   // Ngày khởi hành  
   if(req.query.departureDate) {
     find.departureDate = new Date(req.query.departureDate);
   }
-  // Hết Ngày khởi hành
+
+  // Thời gian đi tour (time)
+  if(req.query.time) {
+    const timeKeyword = req.query.time.trim();
+    if(timeKeyword) {
+      const timeRegex = new RegExp(timeKeyword, "i");
+      find.time = timeRegex;
+    }
+  }
 
   // Số lượng hành khách
-  // Người lớn
   if(req.query.stockAdult) {
-    find.stockAdult = {
-      $gte: parseInt(req.query.stockAdult)
-    }
+    find.stockAdult = { $gte: parseInt(req.query.stockAdult) };
   }
-
-  // Trẻ em
   if(req.query.stockChildren) {
-    find.stockChildren = {
-      $gte: parseInt(req.query.stockChildren)
-    }
+    find.stockChildren = { $gte: parseInt(req.query.stockChildren) };
   }
-
-  // Em bé
   if(req.query.stockBaby) {
-    find.stockBaby = {
-      $gte: parseInt(req.query.stockBaby)
-    }
+    find.stockBaby = { $gte: parseInt(req.query.stockBaby) };
   }
-
-  // Hết Số lượng hành khách
 
   // Mức giá
   if(req.query.price) {
     const [priceMin, priceMax] = req.query.price.split("-").map(item => parseInt(item));
-    
     find.priceNewAdult = {
       $gte: priceMin,
       $lte: priceMax
     };
   }
-  // Hết Mức giá
 
   const tourList = await Tour
     .find(find)
-    .sort({
-      position: "desc"
-    })
+    .sort({ position: "desc" });
 
   for(const item of tourList) {
     item.departureDateFormat = moment(item.departureDate).format("DD/MM/YYYY");
@@ -79,4 +68,4 @@ module.exports.list = async (req, res) => {
     pageTitle: "Kết quả tìm kiếm",
     tourList: tourList
   });
-}
+};
