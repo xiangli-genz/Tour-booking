@@ -136,6 +136,17 @@ block main
                 .inner-total-price
                   span(total-price) #{tourDetail.priceNewAdult.toLocaleString("vi-VN")}
                   span đ
-              button.inner-button-add-cart(tour-id=tourDetail.id) Thêm Vào Giỏ Hàng
+              // Thêm đoạn này
+              if tourDetail.stockAdult === 0
+                .inner-contact-booking(style="background:#fff3cd; border:1px solid #ffc107; border-radius:8px; padding:12px 16px; margin-bottom:12px; text-align:center;")
+                  p(style="margin:0 0 8px 0; font-weight:600; color:#856404; font-size:14px;")
+                    i.fa-solid.fa-phone(style="margin-right:6px;")
+                    | Hết chỗ — Liên hệ để đặt chỗ
+                  a(
+                    href=`tel:${settingWebsiteInfo.phone}`
+                    style="display:inline-block; background:#455A64; color:#fff; border-radius:6px; padding:8px 24px; font-size:14px; font-weight:600;"
+                  ) #{settingWebsiteInfo.phone}
+              else
+                button.inner-button-add-cart(tour-id=tourDetail.id) Thêm Vào Giỏ Hàng
 
     // End Section 10

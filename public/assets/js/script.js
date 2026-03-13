@@ -638,6 +638,39 @@ if(boxTourDetail) {
   // Khởi tạo lần đầu
   drawBoxDetail();
 
+  // Kiểm tra hết chỗ người lớn
+  const checkSoldOut = () => {
+    const adult = parseInt(inputStockAdult.value) || 0;
+    const buttonAddCart = boxTourDetail.querySelector(".inner-button-add-cart");
+    let contactBox = boxTourDetail.querySelector(".inner-contact-booking");
+
+    if (maxAdult === 0) {
+      // Ẩn nút nếu có, hiện thông báo
+      if (buttonAddCart) buttonAddCart.style.display = "none";
+      if (!contactBox) {
+        contactBox = document.createElement("div");
+        contactBox.className = "inner-contact-booking";
+        contactBox.style.cssText = "background:#fff3cd; border:1px solid #ffc107; border-radius:8px; padding:12px 16px; margin-bottom:12px; text-align:center;";
+        contactBox.innerHTML = `
+          <p style="margin:0 0 8px 0; font-weight:600; color:#856404; font-size:14px;">
+            <i class="fa-solid fa-phone" style="margin-right:6px;"></i>
+            Hết chỗ — Liên hệ để đặt chỗ
+          </p>
+          <a href="tel:${settingWebsiteInfo && settingWebsiteInfo.phone ? settingWebsiteInfo.phone : ''}"
+            style="display:inline-block; background:#455A64; color:#fff; border-radius:6px; padding:8px 24px; font-size:14px; font-weight:600;">
+            ${settingWebsiteInfo && settingWebsiteInfo.phone ? settingWebsiteInfo.phone : 'Liên hệ ngay'}
+          </a>`;
+        if (buttonAddCart) {
+          buttonAddCart.parentNode.insertBefore(contactBox, buttonAddCart);
+        } else {
+          boxTourDetail.appendChild(contactBox);
+        }
+      }
+    }
+  };
+
+  checkSoldOut();
+
   // Thêm vào giỏ hàng
   const buttonAddToCart = boxTourDetail.querySelector(".inner-button-add-cart");
   buttonAddToCart.addEventListener("click", () => {
